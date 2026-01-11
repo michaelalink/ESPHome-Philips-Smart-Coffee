@@ -13,8 +13,7 @@ StatusSensor = philips_status_sensor_ns.class_(
 )
 
 CONFIG_SCHEMA = (
-    text_sensor.text_sensor_schema(StatusSensor)
-    .extend(
+    text_sensor._TEXT_SENSOR_SCHEMA.extend(
         {
             cv.GenerateID(): cv.declare_id(StatusSensor),
             cv.Required(CONTROLLER_ID): cv.use_id(PhilipsCoffeeMachine),

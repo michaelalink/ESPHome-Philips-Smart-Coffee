@@ -1,8 +1,8 @@
 #include "esphome/core/log.h"
 #include "philips_coffee_machine.h"
 
-#define MAINBOARD_BUFFER_SIZE 19
-#define DISPLAY_BUFFER_SIZE 12
+#define MAINBOARD_BUFFER_SIZE size_t(19)
+#define DISPLAY_BUFFER_SIZE size_t(12)
 
 namespace esphome
 {
@@ -26,7 +26,7 @@ namespace esphome
             // Pipe display to mainboard
             if (display_uart_.available())
             {
-                uint8_t size = std::min(display_uart_.available(), DISPLAY_BUFFER_SIZE);
+                uint8_t size = std::min(size_t(display_uart_.available()), DISPLAY_BUFFER_SIZE);
                 display_uart_.read_array(display_buffer, size);
 
                 // Check if a action button is currently performing a long press
@@ -67,7 +67,7 @@ namespace esphome
             // Pipe to display
             if (mainboard_uart_.available())
             {
-                uint8_t size = std::min(mainboard_uart_.available(), MAINBOARD_BUFFER_SIZE - 2);
+                uint8_t size = std::min(size_t(mainboard_uart_.available()), MAINBOARD_BUFFER_SIZE - 2);
                 mainboard_uart_.read_array(mainboard_buffer + 2, size);
 
                 display_uart_.write_array(mainboard_buffer + 2, size);
